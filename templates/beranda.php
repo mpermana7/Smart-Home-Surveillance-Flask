@@ -2,7 +2,7 @@
 session_start();
 ob_start();
 if(!isset($_SESSION['id_user'])) {
-    header('location: https://smarthomesurveillance-web.ngrok.app/SAS_web/login.php');
+    header('location: https://smarthomesurveillance-web.ngrok.app/SHS_web/login.php');
 }
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@ if(!isset($_SESSION['id_user'])) {
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-light btn-sm border rounded" type="button" data-bs-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Tidak</button>
-                        <a class="btn btn-dark btn-sm" href="https://smarthomesurveillance-web.ngrok.app/SAS_web/logout.php" role="button"><i class="fas fa-check"></i>&nbsp;Ya, saya ingin keluar</a></div>
+                        <a class="btn btn-dark btn-sm" href="https://smarthomesurveillance-web.ngrok.app/SHS_web/logout.php" role="button"><i class="fas fa-check"></i>&nbsp;Ya, saya ingin keluar</a></div>
                 </div>
             </div>
         </div>
@@ -130,13 +130,13 @@ if(!isset($_SESSION['id_user'])) {
                         <li class="nav-item pb-0 me-3"><a class="nav-link text-center" href="#" data-bs-toggle="modal" data-bs-target="#CameraModal"><i class="fas fa-video" style="font-size: 20px;"></i>
                                 <p class="text-truncate" style="font-size: 11px;">Kamera RTSP</p>
                             </a></li>
-                        <li class="nav-item pb-0 me-3"><a class="nav-link text-center" href="https://smarthomesurveillance-web.ngrok.app/SAS_web/video.php"><i class="fas fa-film" style="font-size: 20px;"></i>
+                        <li class="nav-item pb-0 me-3"><a class="nav-link text-center" href="https://smarthomesurveillance-web.ngrok.app/SHS_web/video.php"><i class="fas fa-film" style="font-size: 20px;"></i>
                                 <p style="font-size: 11px;">Video</p>
                             </a></li>
-                        <li class="nav-item pb-0 me-3"><a class="nav-link text-center" href="https://smarthomesurveillance-web.ngrok.app/SAS_web/buzzer.php"><i class="fas fa-volume-up" style="font-size: 20px;"></i>
+                        <li class="nav-item pb-0 me-3"><a class="nav-link text-center" href="https://smarthomesurveillance-web.ngrok.app/SHS_web/buzzer.php"><i class="fas fa-volume-up" style="font-size: 20px;"></i>
                                 <p style="font-size: 11px;">Buzzer</p>
                             </a></li>
-                        <li class="nav-item pb-0"><a class="nav-link text-center" href="https://smarthomesurveillance-web.ngrok.app/SAS_web/profil.php"><i class="fas fa-user" style="font-size: 20px;"></i>
+                        <li class="nav-item pb-0"><a class="nav-link text-center" href="https://smarthomesurveillance-web.ngrok.app/SHS_web/profil.php"><i class="fas fa-user" style="font-size: 20px;"></i>
                                 <p style="font-size: 11px;">Profil</p>
                             </a></li>
                     </ul>
@@ -159,7 +159,7 @@ if(!isset($_SESSION['id_user'])) {
                             </div>
                             <div class="row">
                                 <div class="col text-center">
-                                    <hr><a class="btn btn-outline-dark btn-sm" role="button" href="https://smarthomesurveillance-web.ngrok.app/SAS_flask/kamera_rtsp.php"><i class="fa fa-eye"></i>&nbsp;Lihat Data Kamera RTSP</a>
+                                    <hr><a class="btn btn-outline-dark btn-sm" role="button" href="https://smarthomesurveillance-web.ngrok.app/SHS_web/kamera_rtsp.php"><i class="fa fa-eye"></i>&nbsp;Lihat Data Kamera RTSP</a>
                                 </div>
                             </div>
                         </div>

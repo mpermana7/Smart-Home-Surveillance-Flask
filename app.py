@@ -29,7 +29,7 @@ selected_camera = None
 is_recording = False
 video_writer = None
 output_directory = 'video'
-backup_directory = 'C:/xampp_personal/htdocs/SAS_flask/video'
+backup_directory = 'C:/xampp_personal/htdocs/SHS_web/video'
 lock = Lock()
 
 if not os.path.exists(output_directory):
