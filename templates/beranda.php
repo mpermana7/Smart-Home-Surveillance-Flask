@@ -2,7 +2,7 @@
 session_start();
 ob_start();
 if(!isset($_SESSION['id_user'])) {
-    header('location: https://smarthomesurveillance-web.ngrok.app/SHS_web/login.php');
+    header('location: https://smarthomesurveillance-web.ngrok.app/SAS_web/login.php');
 }
 ?>
 <!DOCTYPE html>

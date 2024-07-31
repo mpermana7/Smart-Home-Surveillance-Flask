@@ -341,7 +341,80 @@ def hapus_catatan():
     conn.close()
     return redirect(url_for('index'))
 
+def independent_detection():
+    global cap
+    cameras = list_cameras()
+    if cameras:
+        # Automatically start the first available camera
+        start_camera(cameras[0])
+        while True:
+            with lock:
+                if cap is None or not cap.isOpened():
+                    continue
+                ret, frame = cap.read()
+
+            if not ret:
+                print("Failed to read frame from webcam")
+                continue
+
+            frame = cv2.resize(frame, (1280, 720))
+
+            # Fire detection
+            fire_results = fire_model(frame)
+            fire_detected = False
+            for result in fire_results:
+                for box in result.boxes:
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])
+                    label = fire_model.names[int(box.cls[0])]
+                    confidence = box.conf[0]
+                    if label == 'fire':
+                        fire_detected = True
+                        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                        cv2.putText(frame, f'{label} {confidence:.2f}', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+
+            if fire_detected:
+                if fire_detection_start is None:
+                    fire_detection_start = time.time()
+                fire_detected_time = time.time() - fire_detection_start
+                if fire_detected_time >= 3:
+                    insert_notification('Terdeteksi Api')
+                    buzzer('Hidup')
+                    fire_detection_start = None
+                    fire_detected_time = 0
+            else:
+                fire_detection_start = None
+                fire_detected_time = 0
+
+            # Drowsiness detection
+            drowsiness_results = drowsiness_model(frame)
+            drowsiness_detected = False
+            for result in drowsiness_results:
+                for box in result.boxes:
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])
+                    label = drowsiness_model.names[int(box.cls[0])]
+                    confidence = box.conf[0]
+                    if label == 'drowsy':
+                        drowsiness_detected = True
+                        color = (0, 255, 255)
+                        cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
+                        cv2.putText(frame, f'{label} {confidence:.2f}', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
+
+            if drowsiness_detected:
+                if drowsiness_detection_start is None:
+                    drowsiness_detection_start = time.time()
+                drowsiness_detected_time = time.time() - drowsiness_detection_start
+                if drowsiness_detected_time >= 3:
+                    insert_notification('Terdeteksi Kantuk')
+                    buzzer('Hidup')
+                    drowsiness_detection_start = None
+                    drowsiness_detected_time = 0
+            else:
+                drowsiness_detection_start = None
+                drowsiness_detected_time = 0
+
 if __name__ == '__main__':
     buzzer_thread = Thread(target=buzzer_control, daemon=True)
     buzzer_thread.start()
+    detection_thread = Thread(target=independent_detection, daemon=True)
+    detection_thread.start()
     app.run(debug=True)
